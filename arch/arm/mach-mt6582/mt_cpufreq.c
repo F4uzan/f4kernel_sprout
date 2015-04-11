@@ -103,17 +103,20 @@ static struct early_suspend mt_cpufreq_early_suspend_handler =
 #define DVFS_F2_1   (1001000)   // KHz
 #define DVFS_F3     ( 747500)   // KHz
 #define DVFS_F4     ( 598000)   // KHz
+#define DVFS_F5     ( 470000)   // KHz
 
 #if defined(HQA_LV_1_09V)
     #define DVFS_V0     (1200)  // mV
     #define DVFS_V1     (1150)  // mV
     #define DVFS_V2     (1090)  // mV
     #define DVFS_V3     (1090)  // mV
+    #define DVFS_V4     (1040)  // mV
 #elif defined(HQA_NV_1_15V)
     #define DVFS_V0     (1260)  // mV
     #define DVFS_V1     (1200)  // mV
     #define DVFS_V2     (1150)  // mV
     #define DVFS_V3     (1050)  // mV /*Not used */
+    #define DVFS_V4     (1000)  // mV
 #elif defined(HQA_HV_1_21V)
     #define DVFS_V0     (1320)  // mV
     #define DVFS_V1     (1210)  // mV
@@ -141,7 +144,7 @@ static struct early_suspend mt_cpufreq_early_suspend_handler =
 /***********************************************
 * RMAP DOWN TIMES to postpone frequency degrade
 ************************************************/
-#define RAMP_DOWN_TIMES (2)
+#define RAMP_DOWN_TIMES (0)
 
 /**********************************
 * Available Clock Source for CPU
@@ -222,6 +225,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
     OP(DVFS_F2, DVFS_V1),
     OP(DVFS_F3, DVFS_V1),
     OP(DVFS_F4, DVFS_V2),
+    OP(DVFS_F5, DVFS_V3),
 };
 #elif defined(HQA_NV_1_15V)
 static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
@@ -230,6 +234,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
     OP(DVFS_F2, DVFS_V2),
     OP(DVFS_F3, DVFS_V2),
     OP(DVFS_F4, DVFS_V2),
+    OP(DVFS_F5, DVFS_V4),
 };
 #elif defined(HQA_HV_1_21V)
 static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
@@ -238,6 +243,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
     OP(DVFS_F2, DVFS_V1),
     OP(DVFS_F3, DVFS_V1),
     OP(DVFS_F4, DVFS_V1),
+    OP(DVFS_F4, DVFS_V2),
 };
 #else /* Normal case */
 static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
@@ -250,6 +256,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 #endif
 
@@ -263,6 +270,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_1[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static struct mt_cpu_freq_info mt6582_freqs_e1_2[] = {
@@ -275,6 +283,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_2[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static struct mt_cpu_freq_info mt6582_freqs_e1_3[] = {
@@ -287,6 +296,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_3[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static struct mt_cpu_freq_info mt6582_freqs_e1_4[] = {
@@ -299,6 +309,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_4[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static struct mt_cpu_freq_info mt6582_freqs_e1_5[] = {
@@ -310,6 +321,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_5[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static struct mt_cpu_freq_info mt6582_freqs_e1_6[] = {
@@ -321,6 +333,7 @@ static struct mt_cpu_freq_info mt6582_freqs_e1_6[] = {
     #else
     OP(DVFS_F4, DVFS_V2),
     #endif
+    OP(DVFS_F5, DVFS_V2),
 };
 
 static unsigned int mt_cpu_freqs_num;
@@ -2299,7 +2312,7 @@ static int mt_cpufreq_pdrv_probe(struct platform_device *pdev)
     g_cur_freq = DVFS_F2;  /* Default 1.05GHz in preloader */
     g_cur_cpufreq_volt = DVFS_V2; /* Default 1.15V */
     g_limited_max_freq = g_max_freq_by_ptp;
-    g_limited_min_freq = DVFS_F4;
+    g_limited_min_freq = DVFS_F5;
 
     xlog_printk(ANDROID_LOG_INFO, "Power/DVFS", "mediatek cpufreq initialized\n");
 

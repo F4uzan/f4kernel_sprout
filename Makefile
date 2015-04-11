@@ -1,8 +1,8 @@
 VERSION = 3
-PATCHLEVEL = 10
-SUBLEVEL = 73
+PATCHLEVEL = 11
+SUBLEVEL = 1
 EXTRAVERSION =
-NAME = TOSSUG Baby Fish
+NAME = Linux for Workgroups
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -243,8 +243,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = ccache gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
-HOSTCXXFLAGS = -O2
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fomit-frame-pointer
+HOSTCXXFLAGS = -O3
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -344,11 +344,11 @@ CHECK		= sparse
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-CFLAGS_MODULE   =
-AFLAGS_MODULE   =
+CFLAGS_MODULE   = 
+AFLAGS_MODULE   = 
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	=
-AFLAGS_KERNEL	=
+CFLAGS_KERNEL	= -mcpu=cortex-a7 -mfpu=neon -msoft-float -ftree-vectorize
+AFLAGS_KERNEL	= -mcpu=cortex-a7 -mfpu=neon -msoft-float -ftree-vectorize
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -375,8 +375,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks \
-		   -Werror=format -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
+		   -fno-delete-null-pointer-checks
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=

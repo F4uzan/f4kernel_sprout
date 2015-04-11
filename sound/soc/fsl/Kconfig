@@ -112,12 +112,12 @@ config SND_SOC_IMX_PCM
 	tristate
 
 config SND_SOC_IMX_PCM_FIQ
-	bool
+	tristate
 	select FIQ
 	select SND_SOC_IMX_PCM
 
 config SND_SOC_IMX_PCM_DMA
-	bool
+	tristate
 	select SND_SOC_GENERIC_DMAENGINE_PCM
 	select SND_SOC_IMX_PCM
 

@@ -1061,12 +1061,8 @@ int iscsit_process_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 	if (!cmd->immediate_data) {
 		cmdsn_ret = iscsit_sequence_cmd(conn, cmd,
 					(unsigned char *)hdr, hdr->cmdsn);
-		if (cmdsn_ret == CMDSN_ERROR_CANNOT_RECOVER)
+		if (cmdsn_ret == CMDSN_ERROR_CANNOT_RECOVER) {
 			return -1;
-		else if (cmdsn_ret == CMDSN_LOWER_THAN_EXP) {
-			target_put_sess_cmd(conn->sess->se_sess, &cmd->se_cmd);
-			return 0;
-		}
 	}
 
 	iscsit_ack_from_expstatsn(conn, be32_to_cpu(hdr->exp_statsn));
